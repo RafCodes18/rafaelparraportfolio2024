@@ -22,7 +22,7 @@ p {
 /* TRANSITION */
 
 
-.profPic{
+.profilePic{
  border-radius: 15px;
 }
 a,
@@ -122,7 +122,8 @@ a:hover {
   list-style: none;
 }
 
-.menu-links.open {
+.menu-links.
+ {
   max-height: 300px;
 }
 
@@ -435,4 +436,19 @@ footer {
 
 footer p {
   text-align: center;
+}
+
+.profilePic{
+  filter: none !important; /* Important to override other styles */
+  -webkit-filter: none !important;
+}
+
+.body-blur{
+  filter: blur(8px);
+  -webkit-filter: blur(8px);
+}
+
+.exclude-blur{
+  filter: none !important; /* Important to override other styles */
+  -webkit-filter: none !important;
 }
