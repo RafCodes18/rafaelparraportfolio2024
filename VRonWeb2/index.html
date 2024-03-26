@@ -22,155 +22,18 @@
 </head>
 
 <body>
-    <button id="vrButton">submit</button>
-    <script type="module">
-        import * as THREE from 'three';
-        import { VRButton } from 'three/addons/webxr/VRButton.js';
-
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        camera.position.z = 1;
-
-        const renderer = new THREE.WebGLRenderer();
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.xr.enabled = true;
-        document.body.appendChild(renderer.domElement);
-
-        const vrButton = document.getElementById('vrButton');
-        document.body.appendChild(VRButton.createButton(renderer));
-
-        const starsGeometry = new THREE.BufferGeometry();
-        const starsMaterial = new THREE.PointsMaterial({ color: 0xFFFFFF, size: 0.1 });
-
-        const starsVertices = [];
-        for (let i = 0; i < 10000; i++) {
-            const x = (Math.random() - 0.5) * 2000;
-            const y = (Math.random() - 0.5) * 2000;
-            const z = (Math.random() - 0.5) * 2000;
-            starsVertices.push(x, y, z);
-        }
-
-        starsGeometry.setAttribute('position', new THREE.Float32BufferAttribute(starsVertices, 3));
-        const stars = new THREE.Points(starsGeometry, starsMaterial);
-        scene.add(stars);
-
-
-        
-
-        //CARD UI 
-        var geometry = new THREE.PlaneGeometry(1, 1.5); // adjust size as needed
-
-        var material = new THREE.MeshBasicMaterial({
-            color: "rgb(128, 128, 128)", // this is gray
-            transparent: false,
-            opacity: 0.3, // adjust as needed
-            
-            side: THREE.DoubleSide
-        });
-        
-        var card = new THREE.Mesh(geometry, material);
-        card.position.y = 1.6; // Adjust to your camera height
-        card.position.z = -2; // 2 units away from the camera
-        card.rotation.x = -0.2; // slight tilt, adjust as needed
-        card.position.x -= 1; // Shifts the card to the left by 0.5 units.
-        card.rotation.y = .18;
- 
-        scene.add(card);
-
-        var card2 = new THREE.Mesh(geometry, material);
-        card2.position.y = 1.6; // Adjust to your camera height
-        card2.position.z = -2; // 2 units away from the camera
-        card2.rotation.x = -0.2; // slight tilt, adjust as needed
-        card2.position.x += 1; // Shifts the card to the left by 0.5 units. 
-        card2.rotation.y = -.18;
-        scene.add(card2);
-
-
-
-        //ANIMATE AND RENDER
-        function animate() {
-            renderer.setAnimationLoop(render);
-        }
-
-        function render() {
-            renderer.render(scene, camera);
-        }
-
-        
-
-        animate();
-
-        //CONTROLLERS
-        let controller1, controller2;
-        const controllerModelFactory = new THREE.XRControllerModelFactory();
-
-        // Controller 1
-        controller1 = renderer.xr.getController(0);
-        scene.add(controller1);
-
-        const controllerGrip1 = renderer.xr.getControllerGrip(0);
-        controllerGrip1.add(controllerModelFactory.createControllerModel(controllerGrip1));
-        scene.add(controllerGrip1);
-
-        // Controller 2
-        controller2 = renderer.xr.getController(1);
-        scene.add(controller2);
-
-        const controllerGrip2 = renderer.xr.getControllerGrip(1);
-        controllerGrip2.add(controllerModelFactory.createControllerModel(controllerGrip2));
-        scene.add(controllerGrip2);
-
-        //EVENTS
-        controller1.addEventListener('selectstart', onTriggerDown);
-        controller1.addEventListener('selectend', onTriggerUp);
-
-        controller2.addEventListener('selectstart', onTriggerDown);
-        controller2.addEventListener('selectend', onTriggerUp);
-
-        function onTriggerDown(event) {
-            // Code to handle trigger press
-        }
-
-        function onTriggerUp(event) {
-            // Code to handle trigger release
-        }
-
-
-        const raycaster = new THREE.Raycaster();
-
-function update() {
-    // Update raycaster based on controller position and direction
-    if (controller1) {
-        const controllerPose = controller1.getWorldPosition(new THREE.Vector3());
-        const controllerDir = controller1.getWorldDirection(new THREE.Vector3());
-        raycaster.set(controllerPose, controllerDir);
-    }
-
-    // Check for intersections with objects in the scene
-    const intersects = raycaster.intersectObjects(scene.children);
-    if (intersects.length > 0) {
-        // Handle intersection (e.g., highlight object, show tooltip)
-    }
-}
-
-// Call the update function in your render loop
-function render2() {
-    update();
-    renderer.render(scene, camera);
-}
-
-
-
-    </script>
-    <dl8-video
-    title="Example Video"
-    author="Jane Doe"
-    format="STEREO_360_LR"
-  >
-    <source src="video/my-video2.mp4" type="video/mp4" />
-    <source src="video.webm" type="video/webm" /> 
-  </dl8-video>
+    <dl8-video class="vid" title="Example Video" author="Jane Doe"      format="STEREO_360_LR">
+        <source class="vid" src="video/my-video2.mp4" type="video/mp4" />
+        <source src="video.webm" type="video/webm" /> 
+    </dl8-video>
     <script src="//cdn.delight-vr.com/latest/dl8-80194354202deb2031c3ba5920628eddd3d82d7f.js" async></script>
+
+    <style>
+        .vid{
+            height: 500px !important;
+            width: 800px !important;
+        }
+    </style>
 </body>
 
 </html>
